@@ -166,6 +166,9 @@ setupModel(hooks, {
     // optional
   },
   model: 'my-model',
+  init: () => ({
+    // optional
+  }),
   afterModel(model) {
     // optional
   }
@@ -176,6 +179,9 @@ setupService(hooks, {
     // optional
   },
   service: 'my-service',
+  init: () => ({
+    // optional
+  }),
   afterService(service) {
     // optional
   }

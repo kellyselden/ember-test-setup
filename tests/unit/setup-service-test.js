@@ -80,4 +80,27 @@ module('Unit | setupService', function(hooks) {
       assert.ok(afterService.calledAfter(create));
     });
   });
+
+  module('init', function(hooks) {
+    setupService(hooks, {
+      service: 'my-service',
+      init: () => ({
+        bar: 'bar',
+        baz: 'baz'
+      })
+    });
+
+    test('it accepts init', function(assert) {
+      let service = this.service();
+
+      assert.equal(service.get('bar'), 'bar');
+    });
+
+    test('it merges init and options', function(assert) {
+      let service = this.service({ bar: 'baz' });
+
+      assert.equal(service.get('bar'), 'baz', 'options takes precedence');
+      assert.equal(service.get('baz'), 'baz', 'init is still used');
+    });
+  });
 });
