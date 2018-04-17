@@ -1,8 +1,10 @@
 import { run } from '@ember/runloop';
+import { assign } from '@ember/polyfills';
 
 export default function setupModel(hooks, {
   beforeModel = () => {},
   model: _model,
+  init = () => {},
   afterModel = () => {}
 }) {
   hooks.beforeEach(function() {
@@ -10,6 +12,7 @@ export default function setupModel(hooks, {
       beforeModel.call(this);
 
       let store = this.owner.lookup('service:store');
+      options = assign({}, init(), options);
       let subject = run(() => store.createRecord(_model, options));
 
       afterModel.call(this, subject);

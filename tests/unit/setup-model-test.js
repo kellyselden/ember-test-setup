@@ -75,4 +75,32 @@ module('Unit | setupModel', function(hooks) {
       assert.ok(afterModel.calledAfter(createRecord));
     });
   });
+
+  module('init', function(hooks) {
+    setupModel(hooks, {
+      model: 'my-model',
+      init: () => ({
+        foo: 'bar',
+        bar: 'bar',
+        baz: 'baz'
+      })
+    });
+
+    hooks.beforeEach(function() {
+      this.owner.register('model:my-model', MyModel);
+    });
+
+    test('it accepts init', function(assert) {
+      let model = this.model();
+
+      assert.equal(model.get('foo'), 'bar');
+    });
+
+    test('it merges init and options', function(assert) {
+      let model = this.model({ bar: 'baz' });
+
+      assert.equal(model.get('bar'), 'baz', 'options takes precedence');
+      assert.equal(model.get('baz'), 'baz', 'init is still used');
+    });
+  });
 });
