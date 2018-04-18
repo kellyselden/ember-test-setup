@@ -5,13 +5,17 @@ export default function setupRender(hooks, {
   template,
   afterRender = () => {}
 }) {
+  async function render(_template = template) {
+    beforeRender.call(render._this);
+
+    await _render(_template);
+
+    afterRender.call(render._this);
+  }
+
   hooks.beforeEach(function() {
-    this.render = async function render(_template = template) {
-      beforeRender.call(this);
-
-      await _render(_template);
-
-      afterRender.call(this);
-    };
+    render._this = this;
   });
+
+  return render;
 }

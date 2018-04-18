@@ -58,7 +58,7 @@ You might try to make your own helpers to remove the duplication, but here is a 
 ```js
 let label, input;
 
-setupRender(hooks, {
+let render = setupRender(hooks, {
   beforeRender() {
     this.setProperties({
       foo: true,
@@ -78,13 +78,13 @@ setupRender(hooks, {
 });
 
 test('my test 1', async function(assert) {
-  await this.render();
+  await render();
 
   /// run assertions
 });
 
 test('my test 2', async function(assert) {
-  await this.render();
+  await render();
 
   /// run assertions
 });
@@ -119,7 +119,7 @@ import { setupRender } from 'ember-test-setup';
 Then add
 
 ```js
-setupRender(hooks, {
+let render = setupRender(hooks, {
   beforeRender() {
     // optional
   },
@@ -147,13 +147,13 @@ await render(hbs`
 with
 
 ```js
-await this.render();
+await render();
 ```
 
 It is possible to override the default template, useful for testing default values.
 
 ```js
-await this.render(hbs`{{my-component}}`);
+await render(hbs`{{my-component}}`);
 ```
 
 You can also do this for models and services.

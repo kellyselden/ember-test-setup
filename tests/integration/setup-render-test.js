@@ -7,18 +7,18 @@ module('Integration | setupRender', function(hooks) {
   setupRenderingTest(hooks);
 
   module('just template', function(hooks) {
-    setupRender(hooks, {
+    let render = setupRender(hooks, {
       template: hbs`foo`,
     });
 
     test('it renders', async function(assert) {
-      await this.render();
+      await render();
 
       assert.equal(this.element.textContent, 'foo');
     });
 
     test('it overrides template', async function(assert) {
-      await this.render(hbs`bar`);
+      await render(hbs`bar`);
 
       assert.equal(this.element.textContent, 'bar');
     });
@@ -27,7 +27,7 @@ module('Integration | setupRender', function(hooks) {
   module('beeforeRender and afterRender', function(hooks) {
     let foo;
 
-    setupRender(hooks, {
+    let render = setupRender(hooks, {
       beforeRender() {
         this.set('foo', 'bar');
       },
@@ -38,7 +38,7 @@ module('Integration | setupRender', function(hooks) {
     });
 
     test('it renders', async function(assert) {
-      await this.render();
+      await render();
 
       assert.equal(foo.textContent, 'bar');
     });
