@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupService } from 'ember-test-setup';
-import Ember from 'ember';
+import { VERSION } from '@ember/version';
 import Service from '@ember/service';
 import sinon from 'sinon';
 
@@ -53,7 +53,7 @@ module('Unit | setupService', function(hooks) {
     let create;
 
     hooks.beforeEach(function() {
-      if (Ember.VERSION === '2.12.2') {
+      if (VERSION === '2.12.2') {
         let factoryFor = sandbox.stub(this.owner, 'factoryFor');
         create = sinon.stub().returns('foo');
         factoryFor.withArgs('service:my-service').returns({ create });
