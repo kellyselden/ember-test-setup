@@ -14,13 +14,13 @@ module('Integration | setupRender', function(hooks) {
     test('it renders', async function(assert) {
       await render();
 
-      assert.equal(this.element.textContent, 'foo');
+      assert.dom(this.element).hasText('foo');
     });
 
     test('it overrides template', async function(assert) {
       await render(hbs`bar`);
 
-      assert.equal(this.element.textContent, 'bar');
+      assert.dom(this.element).hasText('bar');
     });
   });
 
@@ -40,7 +40,7 @@ module('Integration | setupRender', function(hooks) {
     test('it renders', async function(assert) {
       await render();
 
-      assert.equal(foo.textContent, 'bar');
+      assert.dom(foo).hasText('bar');
     });
   });
 });

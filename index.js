@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-test-setup',
+  name: require('./package').name,
 
   treeForAddonTestSupport(tree) {
     const Funnel = require('broccoli-funnel');
