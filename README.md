@@ -200,6 +200,12 @@ let service = this.service({ /* optional */ });
 ```
 
 
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
 License
 ------------------------------------------------------------------------------
 
