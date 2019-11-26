@@ -10,16 +10,12 @@ const MyService = Service.extend({ foo: 'foo' });
 module('Unit | setupService', function(hooks) {
   setupTest(hooks);
 
-  let sandbox;
-
   hooks.beforeEach(function() {
-    sandbox = sinon.createSandbox();
-
     this.owner.register('service:my-service', MyService);
   });
 
   hooks.afterEach(function() {
-    sandbox.restore();
+    sinon.restore();
   });
 
   module('just service', function(hooks) {
@@ -54,12 +50,12 @@ module('Unit | setupService', function(hooks) {
 
     hooks.beforeEach(function() {
       if (VERSION === '2.12.2') {
-        let factoryFor = sandbox.stub(this.owner, 'factoryFor');
+        let factoryFor = sinon.stub(this.owner, 'factoryFor');
         create = sinon.stub().returns('foo');
         factoryFor.withArgs('service:my-service').returns({ create });
       } else {
         let factory = this.owner.factoryFor('service:my-service');
-        create = sandbox.stub(factory, 'create').returns('foo');
+        create = sinon.stub(factory, 'create').returns('foo');
       }
     });
 

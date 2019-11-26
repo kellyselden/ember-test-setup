@@ -9,14 +9,8 @@ const MyModel = DS.Model.extend({ foo: DS.attr() });
 module('Unit | setupModel', function(hooks) {
   setupTest(hooks);
 
-  let sandbox;
-
-  hooks.beforeEach(function() {
-    sandbox = sinon.createSandbox();
-  });
-
   hooks.afterEach(function() {
-    sandbox.restore();
+    sinon.restore();
   });
 
   module('just model', function(hooks) {
@@ -55,7 +49,7 @@ module('Unit | setupModel', function(hooks) {
 
     hooks.beforeEach(function() {
       let store = this.owner.lookup('service:store');
-      createRecord = sandbox.stub(store, 'createRecord').returns('foo');
+      createRecord = sinon.stub(store, 'createRecord').returns('foo');
     });
 
     test('it calls the hooks', function(assert) {
