@@ -15,6 +15,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "@kellyselden/ember-blueprint",
+      "version": "1.0.2",
+      "blueprints": [
+        {
+          "name": "@kellyselden/ember-blueprint",
+          "options": [
+            "--repo-slug=kellyselden/ember-test-setup"
+          ]
+        }
+      ]
     }
   ]
 }
