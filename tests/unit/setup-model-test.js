@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupModel } from 'ember-test-setup';
-import DS from 'ember-data';
+import Model, { attr } from '@ember-data/model';
 import sinon from 'sinon';
 
-const MyModel = DS.Model.extend({ foo: DS.attr() });
+const MyModel = Model.extend({ foo: attr() });
 
 module('Unit | setupModel', function(hooks) {
   setupTest(hooks);
