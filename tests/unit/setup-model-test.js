@@ -4,7 +4,7 @@ import { setupModel } from 'ember-test-setup';
 import Model, { attr } from '@ember-data/model';
 import sinon from 'sinon';
 
-const MyModel = Model.extend({ foo: attr() });
+class MyModel extends Model { foo = attr() }
 
 module('Unit | setupModel', function(hooks) {
   setupTest(hooks);

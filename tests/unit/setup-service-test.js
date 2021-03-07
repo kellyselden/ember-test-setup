@@ -5,7 +5,7 @@ import { VERSION } from '@ember/version';
 import Service from '@ember/service';
 import sinon from 'sinon';
 
-const MyService = Service.extend({ foo: 'foo' });
+class MyService extends Service { foo = 'foo' }
 
 module('Unit | setupService', function(hooks) {
   setupTest(hooks);
