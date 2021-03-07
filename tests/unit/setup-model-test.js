@@ -4,55 +4,57 @@ import { setupModel } from 'ember-test-setup';
 import Model, { attr } from '@ember-data/model';
 import sinon from 'sinon';
 
-class MyModel extends Model { foo = attr() }
+class MyModel extends Model {
+  foo = attr();
+}
 
-module('Unit | setupModel', function(hooks) {
+module('Unit | setupModel', function (hooks) {
   setupTest(hooks);
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     sinon.restore();
   });
 
-  module('just model', function(hooks) {
+  module('just model', function (hooks) {
     setupModel(hooks, {
       model: 'my-model',
     });
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       this.owner.register('model:my-model', MyModel);
     });
 
-    test('it exists', function(assert) {
+    test('it exists', function (assert) {
       let model = this.model();
 
       assert.ok(model);
     });
 
-    test('it accepts options', function(assert) {
+    test('it accepts options', function (assert) {
       let model = this.model({ foo: 'bar' });
 
       assert.equal(model.get('foo'), 'bar');
     });
   });
 
-  module('beforeModel and afterModel', function(hooks) {
+  module('beforeModel and afterModel', function (hooks) {
     let beforeModel = sinon.spy();
     let afterModel = sinon.spy();
 
     setupModel(hooks, {
       beforeModel,
       model: 'my-model',
-      afterModel
+      afterModel,
     });
 
     let createRecord;
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       let store = this.owner.lookup('service:store');
       createRecord = sinon.stub(store, 'createRecord').returns('foo');
     });
 
-    test('it calls the hooks', function(assert) {
+    test('it calls the hooks', function (assert) {
       assert.notOk(beforeModel.called);
       assert.notOk(afterModel.called);
       assert.notOk(createRecord.called);
@@ -70,27 +72,27 @@ module('Unit | setupModel', function(hooks) {
     });
   });
 
-  module('init', function(hooks) {
+  module('init', function (hooks) {
     setupModel(hooks, {
       model: 'my-model',
       init: () => ({
         foo: 'bar',
         bar: 'bar',
-        baz: 'baz'
-      })
+        baz: 'baz',
+      }),
     });
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       this.owner.register('model:my-model', MyModel);
     });
 
-    test('it accepts init', function(assert) {
+    test('it accepts init', function (assert) {
       let model = this.model();
 
       assert.equal(model.get('foo'), 'bar');
     });
 
-    test('it merges init and options', function(assert) {
+    test('it merges init and options', function (assert) {
       let model = this.model({ bar: 'baz' });
 
       assert.equal(model.get('bar'), 'baz', 'options takes precedence');

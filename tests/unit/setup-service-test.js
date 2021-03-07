@@ -5,50 +5,52 @@ import { VERSION } from '@ember/version';
 import Service from '@ember/service';
 import sinon from 'sinon';
 
-class MyService extends Service { foo = 'foo' }
+class MyService extends Service {
+  foo = 'foo';
+}
 
-module('Unit | setupService', function(hooks) {
+module('Unit | setupService', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('service:my-service', MyService);
   });
 
-  hooks.afterEach(function() {
+  hooks.afterEach(function () {
     sinon.restore();
   });
 
-  module('just service', function(hooks) {
+  module('just service', function (hooks) {
     setupService(hooks, {
       service: 'my-service',
     });
 
-    test('it exists', function(assert) {
+    test('it exists', function (assert) {
       let service = this.service();
 
       assert.equal(service.get('foo'), 'foo');
     });
 
-    test('it accepts options', function(assert) {
+    test('it accepts options', function (assert) {
       let service = this.service({ bar: 'bar' });
 
       assert.equal(service.get('bar'), 'bar');
     });
   });
 
-  module('beforeService and afterService', function(hooks) {
+  module('beforeService and afterService', function (hooks) {
     let beforeService = sinon.spy();
     let afterService = sinon.spy();
 
     setupService(hooks, {
       beforeService,
       service: 'my-service',
-      afterService
+      afterService,
     });
 
     let create;
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       if (VERSION === '2.12.2') {
         let factoryFor = sinon.stub(this.owner, 'factoryFor');
         create = sinon.stub().returns('foo');
@@ -59,7 +61,7 @@ module('Unit | setupService', function(hooks) {
       }
     });
 
-    test('it calls the hooks', function(assert) {
+    test('it calls the hooks', function (assert) {
       assert.notOk(beforeService.called);
       assert.notOk(afterService.called);
       assert.notOk(create.called);
@@ -77,22 +79,22 @@ module('Unit | setupService', function(hooks) {
     });
   });
 
-  module('init', function(hooks) {
+  module('init', function (hooks) {
     setupService(hooks, {
       service: 'my-service',
       init: () => ({
         bar: 'bar',
-        baz: 'baz'
-      })
+        baz: 'baz',
+      }),
     });
 
-    test('it accepts init', function(assert) {
+    test('it accepts init', function (assert) {
       let service = this.service();
 
       assert.equal(service.get('bar'), 'bar');
     });
 
-    test('it merges init and options', function(assert) {
+    test('it merges init and options', function (assert) {
       let service = this.service({ bar: 'baz' });
 
       assert.equal(service.get('bar'), 'baz', 'options takes precedence');

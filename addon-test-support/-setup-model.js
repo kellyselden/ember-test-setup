@@ -1,13 +1,16 @@
 import { run } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
 
-export default function setupModel(hooks, {
-  beforeModel = () => {},
-  model: _model,
-  init = () => {},
-  afterModel = () => {}
-}) {
-  hooks.beforeEach(function() {
+export default function setupModel(
+  hooks,
+  {
+    beforeModel = () => {},
+    model: _model,
+    init = () => {},
+    afterModel = () => {},
+  }
+) {
+  hooks.beforeEach(function () {
     this.model = function model(options = {}) {
       beforeModel.call(this);
 
